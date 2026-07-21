@@ -1,0 +1,7 @@
+include: package:flutter_lints/flutter.yaml
+
+# UI widget trees frequently contain non-const constructors; these hints are noisy
+# for a screen-heavy app and are intentionally relaxed.
+linter:
+  rules:
+    prefer_const_constructors: false

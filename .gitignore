@@ -1,0 +1,89 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.eggs/
+*.spec
+
+# ── Virtual environments ──
+venv/
+.venv/
+env/
+ENV/
+
+# ── Django ──
+backend/db.sqlite3
+backend/db.sqlite3-journal
+backend/*.log
+backend/local_settings.py
+backend/**/migrations/0*.py
+
+# ── Ollama / RAG index (regenerable) ──
+medagent/rag/index/
+medagent/rag/__pycache__/
+
+# ── Flutter / Dart ──
+mobile/.dart_tool/
+mobile/.packages
+mobile/.pub-cache/
+mobile/.pub/
+mobile/build/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/pubspec.lock
+mobile/.metadata
+mobile/android/.gradle/
+mobile/android/app/build/
+mobile/android/local.properties
+mobile/android/.gradle
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/ios/Flutter/Flutter.framework
+mobile/ios/Flutter/Flutter.podspec
+mobile/web/favicon.png
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Environment / Secrets ──
+.env
+.env.local
+.env.production
+*.env
+secrets/
+credentials/
+
+# ── Node (if any) ──
+node_modules/
+npm-debug.log
+
+# ── OS ──
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── Logs ──
+*.log
+logs/
+
+# ── Misc ──
+*.bak
+*.tmp
+*.temp

@@ -1,0 +1,7 @@
+# MED AGENT backend dependencies
+Django>=4.2
+djangorestframework>=3.14   # includes rest_framework.authtoken (token auth)
+cryptography>=41.0   # at-rest encryption for medical records
+requests>=2.28       # Ollama HTTP client (also used by the ai_pipeline package)
+django-cors-headers>=4.0   # allow the Flutter web frontend to call the API
+chromadb>=0.4.0      # RAG vector store for diagnosis knowledge base
