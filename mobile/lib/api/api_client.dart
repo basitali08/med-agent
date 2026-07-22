@@ -15,6 +15,16 @@ class ApiClient {
   String? _token;
   Map<String, dynamic>? _cachedUser;
 
+  // Medical history
+Future<List<MedicalHistory>> getMedicalHistory() async { ... }
+Future<void> addMedicalHistory(MedicalHistory history) async { ... }
+Future<void> updateMedicalHistory(int id, MedicalHistory history) async { ... }
+Future<void> deleteMedicalHistory(int id) async { ... }
+
+// Pipeline analysis
+Future<PipelineResponse> runPipelineAnalysis(PipelineRequest request) async { ... }
+Future<List<AnalysisRecord>> getAnalysisHistory({int limit = 10}) async { ... }
+
   /// Call once at app startup to load the user's saved server URL.
   Future<void> init() async {
     try {
@@ -262,3 +272,8 @@ class ApiClient {
     throw Exception(data['detail'] ?? 'Analysis failed');
   }
 }
+
+
+// Pipeline analysis
+Future<PipelineResponse> runPipelineAnalysis(PipelineRequest request) async { ... }
+Future<List<AnalysisRecord>> getAnalysisHistory({int limit = 10}) async { ... }
