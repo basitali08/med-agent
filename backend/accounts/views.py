@@ -162,6 +162,77 @@ class NearbyHospitalsView(APIView):
                 "emergency": tags.get("emergency", ""),
             })
 
+
+
+
+        # Keep existing RegisterView, LoginView, MeView, NearbyHospitalsView...
+
+from rest_framework import viewsets, permissions
+from .models import MedicalHistory, AnalysisRecord, AnalysisFeedback
+from .serializers import (
+    MedicalHistorySerializer, AnalysisRecordSerializer, 
+    AnalysisFeedbackSerializer
+)
+
+
+class MedicalHistoryViewSet(viewsets.ModelViewSet):
+    """CRUD for medical history conditions."""
+    serializer_class = MedicalHistorySerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        """Return only current user's medical history."""
+        return MedicalHistory.objects.filter(
+            user_profile__user=self.request.user
+        )
+    
+    def perform_create(self, serializer):
+        """Auto-associate with current user's profile."""
+        user_profile = self.request.user.profile
+        serializer.save(user_profile=user_profile)
+    
+    @action(detail=False, methods=['get'])
+    def summary(self, request):
+        """Get summary for AI pipeline (used in Feature #2)."""
+        queryset = self.get_queryset().filter(is_active=True)
+        summary = {
+            'total_conditions': queryset.count(),
+            'conditions': [
+                {
+                    'id': h.id,
+                    'condition_name': h.condition_name,
+                    'date_diagnosed': h.date_diagnosed,
+                    'treatment_received': h.treatment_received,
+                    'status': h.status,
+                    'recurrence_risk': h.recurrence_risk,
+                }
+                for h in queryset
+            ]
+        }
+        return Response(summary)
+
+
+class AnalysisRecordViewSet(viewsets.ReadOnlyModelViewSet):
+    """View saved analysis records (Feature #5)."""
+    serializer_class = AnalysisRecordSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        """Return only current user's analyses."""
+        return AnalysisRecord.objects.filter(
+            user_profile__user=self.request.user
+        )
+    
+    @action(detail=True, methods=['post'])
+    def add_feedback(self, request, pk=None):
+        """Add feedback to an analysis."""
+        analysis = self.get_object()
+        serializer = AnalysisFeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(analysis=analysis)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         # Sort by distance
         hospitals.sort(key=lambda h: h["distance_m"])
 
