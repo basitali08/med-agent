@@ -364,6 +364,14 @@ class _ScoreRingPainter extends CustomPainter {
       glowPaint,
     );
   }
+  ElevatedButton(
+  onPressed: () => context.pushNamed('medical-history', extra: userProfile),
+  child: const Text('📋 Medical History'),
+),
+ElevatedButton(
+  onPressed: () => context.pushNamed('symptom-checker', extra: userProfile),
+  child: const Text('🩺 AI Analysis'),
+),
 
   @override
   bool shouldRepaint(_ScoreRingPainter old) => old.score != score;
