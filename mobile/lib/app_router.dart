@@ -27,6 +27,20 @@ class AppRouter {
       GoRoute(path: '/emergency', builder: (_, __) => const EmergencyScreen()),
       GoRoute(path: '/profile', builder: (_, __) => const ProfileScreen()),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
+      GoRoute(
+            path: '/profile/medical-history',
+            name: 'medical-history',
+            builder: (context, state) => ProfileMedicalHistoryScreen(
+            initialProfile: state.extra as UserProfileData,
+  ),
+),
+GoRoute(
+  path: '/symptom-checker',
+  name: 'symptom-checker',
+  builder: (context, state) => SymptomCheckerScreen(
+    userProfile: state.extra as UserProfileData,
+  ),
+),
     ],
   );
 }
